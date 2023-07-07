@@ -6,6 +6,7 @@ use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
@@ -14,16 +15,29 @@ class CategoryController extends Controller
     {
         $this->category = $category;
     }
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->get(key:'q');
-        $categories = $this->category->latest('id')->where(column:'name', operator:'like', value:'%'.$search.'%')->paginate(3);
-        return view('admin.categories.index',compact('categories','search'));
+       
+        return view('admin.categories.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
+    public function api()
+    {
+        return DataTables::of(Category::query())
+        ->editColumn('parent_id', function ($object) {
+            return $object->parent_name;
+        })
+        ->addColumn('edit', function ($object) {
+            return route('categories.edit', $object);
+        })
+        ->addColumn('destroy', function ($object) {
+            return route('categories.destroy', $object);
+        })
+        ->make(true);
+    }
     public function create()
     {
        $parrentCategories = $this->category->getParents();
@@ -85,9 +99,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = $this->category->findOrFail($id);
-        $category->delete();
-        return redirect()->route('categories.index')->with(['message'=>'Delete category: '.$category->name." success"]);
+        $this->category->where('id',$id)->delete();
+        $arr['status'] = true;
+        $arr['message'] = '';
+        return response($arr, 200);
          
     }
     

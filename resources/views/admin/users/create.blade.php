@@ -128,7 +128,7 @@
             });
         });
     </script>
-    {{-- <script src="{{ asset('admin.product.product.js') }}"></script> --}}
+    <script src="{{ asset('admin/product/product.js') }}"></script>
 
     <script src="{{ asset('admin/template/vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/template/vendors/select2/select2.min.js') }}"></script>

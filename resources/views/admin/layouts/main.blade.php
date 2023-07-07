@@ -19,6 +19,7 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('admin/template/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
 </head>
 
@@ -165,6 +166,7 @@
     <script src="{{ asset('admin/template/js/dashboard.js') }}"></script>
     <!-- End custom js for this page-->
     @yield('script')
+    @stack('js')
 </body>
 
 </html>

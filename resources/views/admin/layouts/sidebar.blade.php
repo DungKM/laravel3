@@ -30,7 +30,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('products.index')}}">
           <i class="icon-paper menu-icon"></i>
           <span class="menu-title">Product</span>
         </a>
@@ -39,6 +39,12 @@
         <a class="nav-link" href="{{route('categories.index')}}">
           <i class="icon-file-add menu-icon"></i>
           <span class="menu-title">Category</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('coupons.index')}}">
+          <i class="icon-paper menu-icon"></i>
+          <span class="menu-title">Coupon</span>
         </a>
       </li>
       <li class="nav-item">
