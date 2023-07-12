@@ -48,7 +48,7 @@
                                         {{ $item->id }}
                                     </td>
                                     <td>
-                                        <img src="{{ $item->images->count() > 0 ? asset('upload/' . $item->images->first()->url) : 'upload/default.jpg' }}"
+                                        <img src="{{ $item->image_path }}"
                                             alt="" width="100" height="100">
 
                                     </td>

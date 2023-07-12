@@ -112,36 +112,31 @@ class ProductController extends Controller
         $dataUpdate = $request->except('sizes');
         $sizes = $request->sizes ? json_decode($request->sizes) : [];
         $product = $this->product->findOrFail($id);
-
-        $currentImage = $product->images ? $product->images->first()->url : '';
+        $currentImage = $currentImage = $product->images && $product->images->first() ? $product->images->first()->url : '';
         $dataUpdate['image'] = $this->product->updateImage($request, $currentImage);
-
+    
         $product->update($dataUpdate);
-
+    
         $product->images()->create(['url' => $dataUpdate['image']]);
         $product->assignCategory($dataUpdate['category_ids']);
         $sizeArray = [];
         foreach ($sizes as $size) {
             $sizeArray[] = ['size' => $size->size, 'quantity' => $size->quantity, 'product_id' => $product->id];
         }
-        $product->details()->delete();
-        $this->productDetail->insert($sizeArray);
+        $product->details()->delete(); // Xóa hết các size cũ của sản phẩm
+        $product->details()->createMany($sizeArray); // Thêm các size mới vào sản phẩm
         return redirect()->route('products.index')->with(['message' => 'Update product success']);
     }
+    
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $product = $this->product->findOrFail($id);
-        $product->delete();
         $imageName = $product->images->count() > 0 ? $product->images->first()->url : '';
         $this->product->deleteImage($imageName);
+        $product->images()->delete();
         $product->delete();
+        $product->details()->delete();
         return redirect()->route('products.index')->with(['message' => 'Delete product success']);
     }
 }

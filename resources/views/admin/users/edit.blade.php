@@ -28,9 +28,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{ $user->images ? asset('upload/' . $user->images->first()->url) : 'upload/users/default.png' }}"
-                                    alt="" width="100" id="show-image">
-
+                                    @if ($user->images && $user->images->first())
+                                        <img src="{{ asset('upload/' . $user->images->first()->url) }}" alt="" width="100" id="show-image">
+                                    @else
+                                        <img src="{{ asset('upload/default.jpg') }}" alt="" width="100" id="show-image">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -60,7 +62,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPhone1">Phone</label>
-                            <input type="number" class="form-control" value="{{ old('phone') ?? $user->phone }}" id="exampleInputPhone1"
+                            <input type="text" class="form-control" value="{{ old('phone') ?? $user->phone }}" id="exampleInputPhone1"
                                 placeholder="phone" name="phone">
                             @error('phone')
                                 <div class="text-danger">{{ $message }}</div>

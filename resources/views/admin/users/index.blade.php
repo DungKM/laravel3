@@ -10,9 +10,10 @@
                 </p>
                 <div class="pull-left search">
                     <form>
-                      <input type="search" class="form-control" placeholder="Search" name="q" value="{{$search}}">
+                        <input type="search" class="form-control" placeholder="Search" name="q"
+                            value="{{ $search }}">
                     </form>
-            </div>
+                </div>
                 <div class="table-responsive pt-3">
                     <table class="table table-dark">
                         <thead>
@@ -22,6 +23,9 @@
                                 </th>
                                 <th>
                                     Name
+                                </th>
+                                <th>
+                                    Image
                                 </th>
                                 <th>
                                     Email
@@ -35,7 +39,6 @@
                                 <th>
                                     Action
                                 </th>
-
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +49,9 @@
                                     </td>
                                     <td>
                                         {{ $item->name }}
+                                    </td>
+                                    <td>
+                                        <img src="{{ $item->image_path }}" alt="" width="100" height="100">
                                     </td>
                                     <td>
                                         {{ $item->email }}

@@ -16,11 +16,7 @@ class CouponController extends Controller
     {
         $this->coupon = $coupon;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         // $search = $request->get(key: 'q');
@@ -46,12 +42,6 @@ class CouponController extends Controller
         return view('admin.coupons.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateCouponRequest $request)
     {
         $dataCreate =  $request->all();
@@ -61,23 +51,11 @@ class CouponController extends Controller
         return redirect()->route('coupons.index')->with(['message' => 'create coupon success']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
@@ -85,29 +63,13 @@ class CouponController extends Controller
         return view('admin.coupons.edit', compact('coupon'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCouponRequest $request, $id)
     {
         $coupon = $this->coupon->findOrFail($id);
         $dataUpdate = $request->all();
         $coupon->update($dataUpdate);
         return redirect()->route('coupons.index')->with(['message' => 'Update coupon success']);
-
-        //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $this->coupon->where('id',$id)->delete();

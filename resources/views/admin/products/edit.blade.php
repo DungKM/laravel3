@@ -28,7 +28,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{ $product->images ? asset('upload/' . $product->images->first()->url) : 'upload/default.jpg' }}" alt="" width="200" id="show-image">
+                                    @if ($product->images && $product->images->first())
+                                        <img src="{{ asset('upload/' . $product->images->first()->url) }}" alt="" width="100" id="show-image">
+                                    @else
+                                        <img src="{{ asset('upload/default.jpg') }}" alt="" width="100" id="show-image">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -66,7 +70,7 @@
                             @enderror
                         </div>
                         <!-- Button trigger modal -->
-                        <input type="hidden" id="inputSize" name='sizes'>
+                        <input type="hidden" id="inputSize" name='sizes'    value="{{ old('price') ?? $product->price }}">
                         <button type="button" class="btn btn-primary clickmodal" data-bs-toggle="modal"
                             data-bs-target="#AddSizeModal">
                             Add size
@@ -121,6 +125,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script> --}}
+    <script>
+        let sizes = @json($product->details)
+    </script>
+
     <script>
         let sizes = [{
             id: Date.now(),

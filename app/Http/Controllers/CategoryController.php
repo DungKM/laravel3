@@ -45,12 +45,6 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateCategoryRequest $request)
     {
         //
@@ -60,9 +54,6 @@ class CategoryController extends Controller
       
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
@@ -75,13 +66,7 @@ class CategoryController extends Controller
         return view('admin.categories.edit', compact('category','parrentCategories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(UpdateCategoryRequest $request, $id)
     {
        $dataUpdate = $request->all();
@@ -91,20 +76,14 @@ class CategoryController extends Controller
         
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
         $this->category->where('id',$id)->delete();
         $arr['status'] = true;
-        $arr['message'] = '';
+        $arr['message'] = 'Delete successfully';
         return response($arr, 200);
          
     }
-    
 
 }
