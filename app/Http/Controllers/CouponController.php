@@ -7,6 +7,7 @@ use App\Http\Requests\Coupon\CreateCouponRequest;
 use App\Http\Requests\Coupon\UpdateCouponRequest;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
 use Yajra\DataTables\DataTables;
 
 class CouponController extends Controller
@@ -17,25 +18,14 @@ class CouponController extends Controller
         $this->coupon = $coupon;
     }
   
-    public function index()
+    public function index(Request $request)
     {
-        // $search = $request->get(key: 'q');
-        // $coupons = $this->coupon->latest('id')->where(column: 'name', operator: 'like', value: '%' . $search . '%')->paginate(3);
-        return view('admin.coupons.index');
+        $search = $request->get(key: 'q');
+        $coupons = $this->coupon->latest('id')->where(column: 'name', operator: 'like', value: '%' . $search . '%')->paginate(3);
+        return view('admin.coupons.index', compact('coupons','search'));
     }
 
-    public function api()
-    {
-        return DataTables::of(Coupon::query())
-      
-        ->addColumn('edit', function ($object) {
-            return route('coupons.edit', $object);
-        })
-        ->addColumn('destroy', function ($object) {
-            return route('coupons.destroy', $object);
-        })
-        ->make(true);
-    }
+ 
     
     public function create()
     {
@@ -72,9 +62,10 @@ class CouponController extends Controller
     }
     public function destroy($id)
     {
-        $this->coupon->where('id',$id)->delete();
-        $arr['status'] = true;
-        $arr['message'] = '';
-        return response($arr, 200);
+        $coupon = $this->coupon->findOrFail($id);
+        $coupon->delete();
+
+        return redirect()->route('coupons.index')->with(['message' => 'Delete ' . $coupon->name . ' success']);
     }
+
 }

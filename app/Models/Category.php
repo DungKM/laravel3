@@ -26,5 +26,9 @@ class Category extends Model
     public function getParents(){
         return Category::whereNull('parent_id')->with('childrens')->get(['id','name']);     
     }
-
+    public function categoryProducts()
+    {
+        return $this->hasMany(CategoryProduct::class, 'category_id');
+    }
+    
 }

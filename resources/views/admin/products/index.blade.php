@@ -10,10 +10,10 @@
                     <a href="{{ route('products.create') }}" class="btn btn-info font-weight-bold">+ Create Product</a>
                 </p>
                 <div class="pull-left search">
-                    {{-- <form>
+                    <form>
                         <input type="search" class="form-control" placeholder="Search" name="q"
                             value="{{ $search }}">
-                    </form> --}}
+                    </form>
                 </div>
                 <div class="table-responsive pt-3">
                     <table class="table table-dark">
@@ -33,7 +33,7 @@
                                 </th>
                                 <th>
                                     Price
-                                  
+
                                 </th>
                                 <th>
                                     Action
@@ -48,8 +48,7 @@
                                         {{ $item->id }}
                                     </td>
                                     <td>
-                                        <img src="{{ $item->image_path }}"
-                                            alt="" width="100" height="100">
+                                        <img src="{{ $item->image_path }}" alt="" width="100" height="100">
 
                                     </td>
                                     <td>
@@ -64,24 +63,28 @@
 
                                     <td>
                                         <div class="row">
-                                            <div class="p-1">
-                                                <form action="{{ route('products.destroy', $item->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger">Delete</button>
-                                                </form>
-                                            </div>
-                                            <div class="p-1">
-                                                <a href="{{ route('products.edit', $item->id) }}"
-                                                    class="btn btn-info btn-fw">Update</a>
-                                            </div>
-                                            <div class="p-1">
-                                                <a href="{{ route('products.show', $item->id) }}"
-                                                    class="btn btn-info btn-fw">Show</a>
-                                            </div>
-
+                                            @can('delete-product')
+                                                <div class="p-1">
+                                                    <form action="{{ route('products.destroy', $item->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            @endcan
+                                            @can('update-product')
+                                                <div class="p-1">
+                                                    <a href="{{ route('products.edit', $item->id) }}"
+                                                        class="btn btn-info btn-fw">Update</a>
+                                                </div>
+                                            @endcan
+                                            @can('show-product')
+                                                <div class="p-1">
+                                                    <a href="{{ route('products.show', $item->id) }}"
+                                                        class="btn btn-info btn-fw">Show</a>
+                                                </div>
+                                            @endcan
                                         </div>
-
                                     </td>
                                 </tr>
                             @endforeach

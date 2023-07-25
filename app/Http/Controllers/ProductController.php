@@ -28,31 +28,18 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $products = $this->product->latest('id')->paginate(5);
-        return view('admin.products.index', compact('products'));
+        $search = $request->get(key:'q');
+        $products = $this->product->latest('id')->where(column:'name', operator:'like', value:'%'.$search.'%')->paginate(3);
+        return view('admin.products.index', compact('products','search'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
         $categories = $this->category->get(['id', 'name']);
         return view('admin.products.create', compact('categories'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateProductRequest $request)
     {
         $dataCreate = $request->except('sizes');

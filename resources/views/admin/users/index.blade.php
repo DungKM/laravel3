@@ -64,20 +64,22 @@
                                     </td>
                                     <td>
                                         <div class="row">
-                                            <div class="p-1">
-                                                <form action="{{ route('users.destroy', $item->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-danger">Delete</button>
-                                                </form>
-                                            </div>
-                                            <div class="p-1">
-                                                <a href="{{ route('users.edit', $item->id) }}"
-                                                    class="btn btn-info btn-fw">Update</a>
-                                            </div>
-
+                                            @can('delete-user')
+                                                <div class="p-1">
+                                                    <form action="{{ route('users.destroy', $item->id) }}" method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            @endcan
+                                            @can('update-user')
+                                                <div class="p-1">
+                                                    <a href="{{ route('users.edit', $item->id) }}"
+                                                        class="btn btn-info btn-fw">Update</a>
+                                                </div>
+                                            @endcan
                                         </div>
-
                                     </td>
                                 </tr>
                             @endforeach

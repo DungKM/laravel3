@@ -1,5 +1,5 @@
 @extends('client.layout.app')
-
+@section('title','List product')
 @section('content')
     <!-- Product -->
     <div class="bg0 m-t-23 p-b-140">
@@ -10,10 +10,7 @@
                         <a href="{{ route('client.products.categoryid', ['category_id' => $item->id]) }}"
                             class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ">{{ $item->name }}</a>
                     @endforeach
-
-
                 </div>
-
                 <div class="flex-w flex-c-m m-tb-10">
                     <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
                         <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
@@ -27,7 +24,6 @@
                         Search
                     </div>
                 </div>
-
                 <!-- Search product -->
                 <div class="dis-none panel-search w-full p-t-10 p-b-15">
                     <div class="bor8 dis-flex p-l-15">

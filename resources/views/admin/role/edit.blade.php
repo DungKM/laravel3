@@ -23,7 +23,8 @@
                         <div class="form-group">
                             <label for="exampleInputDisplayName1">DisplayName</label>
                             <input type="text" class="form-control" id="exampleInputDisplayName1"
-                                placeholder="DisplayName" name="display_name" value="{{ old('display_name') ?? $role->display_name }}">
+                                placeholder="DisplayName" name="display_name"
+                                value="{{ old('display_name') ?? $role->display_name }}">
                             @error('display_name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -32,8 +33,8 @@
                             <label for="exampleInputDisplayName1">Group</label>
                             <select class="form-control form-control-sm" name="group" value="{{ $role->group }}">
                                 <option value="">Choose</option>
-                                <option value="system" {{$role->group == 'system' ? 'selected' : ''}}>System</option>
-                                <option value="user" {{$role->group == 'user' ? 'selected' : ''}}>User</option>
+                                <option value="system" {{ $role->group == 'system' ? 'selected' : '' }}>System</option>
+                                <option value="user" {{ $role->group == 'user' ? 'selected' : '' }}>User</option>
                             </select>
                             @error('group')
                                 <div class="text-danger">{{ $message }}</div>
@@ -49,7 +50,8 @@
                                                 <p class="mb-2">{{ $item->display_name }}</p>
                                                 <label class="toggle-switch toggle-switch-success">
                                                     <input type="checkbox" value="{{ $item->id }}"
-                                                        name="permission_ids[]"  {{ $role->permissions->contains('name', $item->name) ? 'checked' : '' }}>
+                                                        name="permission_ids[]"
+                                                        {{ $role->permissions->contains('name', $item->name) ? 'checked' : '' }}>
                                                     <span class="toggle-slider round"></span>
                                                 </label>
                                             </div>
@@ -57,9 +59,7 @@
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
-
                         <button class="btn btn-primary mr-2">Submit</button>
                     </form>
                 </div>

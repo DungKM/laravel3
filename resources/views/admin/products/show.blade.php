@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <img src="{{ $product->images ? asset('upload/' . $product->images->first()->url) : 'upload/default.png' }}"
-                                    alt="" id="show-image">
+                                    alt="" width="300" id="show-image">
                             </div>
                         </div>
                     </div>

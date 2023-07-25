@@ -57,23 +57,30 @@
 
                                     <td class="column-6">
                                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                            <button
+                                                class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m btn-update-quantity"
+                                                data-action="{{ route('client.carts.update_product_quantity', $item->id) }}"
+                                                data-id="{{ $item->id }}">
                                                 <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
+                                            </button>
 
                                             <input class="mtext-104 cl3 txt-center num-product" type="number"
+                                                id="productQuantityInput-{{ $item->id }}"
                                                 value="{{ $item->product_quantity }}">
 
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                            <button
+                                                class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m btn-update-quantity"
+                                                data-action="{{ route('client.carts.update_product_quantity', $item->id) }}"
+                                                data-id="{{ $item->id }}">
                                                 <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
+                                            </button>
                                         </div>
                                     </td>
 
                                     <td class="column-7">
                                         ${{ $item->product->sale ? $item->product->sale_price * $item->product_quantity : $item->product->price * $item->product_quantity }}
                                     </td>
-                                    
+
                                     <td class="column-8">
                                         <button class=" btn-remove-product"
                                             data-action="{{ route('client.carts.remove_product', $item->id) }}"><i
@@ -158,7 +165,24 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            $('.btn-num-product-down').on('click', function() {
+                var numProduct = Number($(this).next().val());
+                if (numProduct > 0) $(this).next().val(numProduct - 1);
+            });
+
+            $('.btn-num-product-up').on('click', function() {
+                var numProduct = Number($(this).prev().val());
+                $(this).prev().val(numProduct + 1);
+            });
+        });
+    </script>
 @endsection
+
 @push('script')
     <script>
         $(function() {

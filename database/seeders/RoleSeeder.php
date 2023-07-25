@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
@@ -22,6 +23,13 @@ class RoleSeeder extends Seeder
         foreach ($roles as $role) {
             Role::updateOrCreate($role);
         }
+        $superAdmin = User::whereEmail('admin@gmail.com')->first();
+        if (!$superAdmin) {
+            $superAdmin = User::factory()->create(['email' => 'admin@gmail.com']);
+        }
+        $superAdmin->assignRole('super-admin');
+
+
         $permissions = [
             ['name' => 'create-user', 'display_name' => 'Create user', 'group' => 'User'],
             ['name' => 'update-user', 'display_name' => 'Update user', 'group' => 'User'],
@@ -47,6 +55,10 @@ class RoleSeeder extends Seeder
             ['name' => 'update-coupon', 'display_name' => 'Update coupon', 'group' => 'coupon'],
             ['name' => 'show-coupon', 'display_name' => 'Show coupon', 'group' => 'coupon'],
             ['name' => 'delete-coupon', 'display_name' => 'Delete coupon', 'group' => 'coupon'],
+
+
+            ['name' => 'list-order', 'display_name' => 'list order', 'group' => 'Order'],
+            ['name' => 'update-order-status', 'display_name' => 'Update order status', 'group' => 'Order'],
 
 
         ];

@@ -48,14 +48,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputSale">Sale</label>
-                            <input type="text" class="form-control" id="exampleInputSale" placeholder="NameCategories"
-                                name="sale" value="{{ old('sale') }}">
-                            @error('sale')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+            
                         <div class="form-group">
                             <label for="">Description</label>
                             <textarea name="description" class="form-control" id="description" value="{{ old('description') }}"></textarea>
@@ -77,8 +70,6 @@
                                 <div class="modal-content p-3">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="AddSizeModalLabel">Add size</h5>
-                                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button> --}}
                                     </div>
                                     <div class="modal-body" id="AddSizeModalBody">
                                     </div>
@@ -126,6 +117,10 @@
         }];
         </script>
     <script src="{{ asset('admin/template/product/product.js') }}"></script>
+
+
+
+    
     <script src="{{ asset('plugin/ckeditor5-build-classic/ckeditor.js') }}"></script>
     <script src="{{ asset('admin/template/js/file-upload.js') }}"></script>
 

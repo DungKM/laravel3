@@ -216,6 +216,11 @@
           </div>
       </div>
   </div>
+  <div class="btn-back-to-top" id="myBtn" style="display: flex;">
+    <span class="symbol-btn-back-to-top">
+        <i class="zmdi zmdi-chevron-up"></i>
+    </span>
+</div>
   <script src="{{ asset('client/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
   <script src="{{ asset('client/vendor/animsition/js/animsition.min.js') }}"></script>
   <script src="{{ asset('client/vendor/bootstrap/js/popper.js') }}"></script>

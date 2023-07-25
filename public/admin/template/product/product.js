@@ -1,19 +1,4 @@
 $(() => {
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#show-image").attr("src", e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#image-input").change(function () {
-        readURL(this);
-    });
-});
-$(() => {
     ClassicEditor.create(document.querySelector("#description"), {
         // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
     })
@@ -23,8 +8,7 @@ $(() => {
         .catch((err) => {
             console.error(err.stack);
         });
-});
-$(() => {
+
     renderSizes(sizes);
     appendSizesToForm();
     var modal = $(".modal");
@@ -107,11 +91,11 @@ $(() => {
 
                                 <div class="col-sm-4">
                                     <label>Quantity</label>
-                                    <input type="number" value="${size.quantity}" class="form-control input-quantity" data-id="${size.id}">
+                                    <input type="text" value="${size.quantity}" class="form-control input-quantity" data-id="${size.id}">
                                 </div>
-                                <div class="col-sm-2">
-                                    <label>Delete</label>
-                                    <button type="button" class="btn btn-danger form-control btn-remove-size" data-id="${size.id}">X</button>
+                                <div class="col-sm-4">
+                               
+                                    <button type="button" class="btn btn-danger btn-remove-size" data-id="${size.id}">X</button>
                                 </div>
                             </div>
                             </div>
@@ -127,5 +111,19 @@ $(() => {
         if (index >= 0) {
             sizes[index].quantity = quantity;
         }
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#show-image").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image-input").change(function () {
+        readURL(this);
     });
 });

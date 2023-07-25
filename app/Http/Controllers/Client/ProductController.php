@@ -5,13 +5,21 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
+
     protected $product;
     public function __construct(Product $product)
     {
         $this->product = $product;
+        $routeName = Route::currentRouteName();
+        $arr = explode('.', $routeName);
+        $arr = array_map('ucfirst', $arr);
+        $title = implode(' > ', $arr);
+        View::share('title', $title);
     }
 
     /**
@@ -23,14 +31,16 @@ class ProductController extends Controller
     {
         // $products = $this->product->getBy($request->all(), $category_id);
         $products = $this->product->latest('id')->paginate(5);
-
-        return view('client.product.index',compact('products'));
+        
+        return view('client.product.index', compact('products'));
     }
 
 
-    public function category_product(Request $request, $category_id){
-         $products = $this->product->getBy($request->all(), $category_id);
-         return view('client.product.index',compact('products'));
+    public function category_product(Request $request, $category_id)
+    {
+        $products = $this->product->getBy($request->all(), $category_id);
+
+        return view('client.product.index', compact('products'));
     }
     /**
      * Show the form for creating a new resource.
@@ -62,10 +72,13 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->product->with('details')->findOrFail($id);
-        return view('client.product.detail',compact('product'));
-        //
+        $categoryId = $product->categories->pluck('id')->first(); // Assuming a product can belong to multiple categories, we retrieve the first category ID.
+    
+        $relatedProducts = $this->product->getBy($product->name, $categoryId);
+    
+        return view('client.product.detail', compact('product', 'relatedProducts'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -99,5 +112,4 @@ class ProductController extends Controller
     {
         //
     }
-
 }
